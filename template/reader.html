@@ -1,0 +1,913 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Belajar Kosakata dan Bunpou</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;700&display=swap">
+<style>
+:root {
+  --paper: #F7F2E8; --card: #FFFDF8; --ink: #1F1B16; --muted: #6B6358; --line: #E4DCCB;
+  --indigo: #27386B; --indigo-soft: #E4E8F3; --on-accent: #FFFFFF;
+  --vermilion: #C2412D; --vermilion-soft: #F8E3DC;
+  --ok: #2F7D57; --ok-soft: #DDF0E4; --warn: #A8600B;
+  --shadow: 0 1px 0 rgba(31,27,22,.04), 0 10px 28px -16px rgba(31,27,22,.22);
+  --r: 16px; --r-sm: 11px;
+  --f-display: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --f-ui: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #14120F; --card: #1C1915; --ink: #EFE8DA; --muted: #A39A89; --line: #332D25;
+    --indigo: #A9B8F0; --indigo-soft: #1F2740; --on-accent: #14120F;
+    --vermilion: #F07E62; --vermilion-soft: #3A1F18; --ok: #7CD3A0; --ok-soft: #173424; --warn: #E9B66A;
+    --shadow: 0 12px 30px -16px rgba(0,0,0,.7); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #14120F; --card: #1C1915; --ink: #EFE8DA; --muted: #A39A89; --line: #332D25;
+  --indigo: #A9B8F0; --indigo-soft: #1F2740; --on-accent: #14120F;
+  --vermilion: #F07E62; --vermilion-soft: #3A1F18; --ok: #7CD3A0; --ok-soft: #173424; --warn: #E9B66A;
+  --shadow: 0 12px 30px -16px rgba(0,0,0,.7); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink); font: 400 15px/1.6 var(--f-ui);
+  padding-block: max(24px, env(safe-area-inset-top, 0px)) 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 20px; }
+header { display: grid; gap: 6px; }
+.brand { display: flex; align-items: center; gap: 14px; }
+.seal {
+  flex: none; width: 50px; height: 50px; border-radius: 10px; display: grid; place-items: center;
+  background: var(--vermilion); color: #FFF8F2; font: 700 24px/1 var(--f-display); transform: rotate(-4deg);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.22), 0 6px 14px -8px rgba(194,65,45,.7);
+}
+h1 { margin: 0; font: 700 clamp(1.55rem, 4.4vw, 2.2rem)/1.15 var(--f-display); letter-spacing: .01em; text-wrap: balance; }
+header p { margin: 0; color: var(--muted); font-size: 14px; max-width: 66ch; }
+
+.tabs {
+  display: inline-flex; gap: 4px; padding: 4px; justify-self: start;
+  background: var(--card); border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow);
+}
+.tabs button {
+  border: 0; background: transparent; color: var(--muted); font: 600 14px var(--f-ui);
+  padding: 9px 18px; min-height: 42px; border-radius: 999px; cursor: pointer;
+}
+.tabs button[aria-selected="true"] { background: var(--indigo); color: var(--on-accent); }
+
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; box-shadow: var(--shadow); min-width: 0; }
+.panel h2 { margin: 0 0 14px; font: 600 11.5px var(--f-ui); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+
+.top { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 14px; }
+dt { color: var(--muted); }
+dd { margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font: 500 13px var(--f-ui); color: var(--ink); background: var(--paper); border: 1px solid var(--line);
+  border-radius: 999px; padding: 6px 13px; min-height: 36px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+}
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chip .n { opacity: .65; font-variant-numeric: tabular-nums; }
+
+details.load { margin-top: 16px; }
+summary { cursor: pointer; color: var(--indigo); font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+.drop {
+  display: grid; gap: 4px; padding: 16px; margin-top: 10px; border: 1.5px dashed var(--line); border-radius: var(--r-sm);
+  background: var(--paper); cursor: pointer;
+}
+.drop:hover, .drop.over, .drop:focus-within { border-color: var(--indigo); }
+.drop span { color: var(--muted); font-size: 13px; }
+.drop input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+textarea, input[type="search"], select {
+  font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--r-sm); padding: 10px 12px; min-height: 44px;
+}
+textarea { width: 100%; min-height: 100px; margin-top: 8px; font-family: var(--f-mono); font-size: 12.5px; resize: vertical; }
+input[type="search"] { width: 100%; min-width: 0; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 3px var(--indigo-soft); }
+.btn {
+  font: 600 14px var(--f-ui); border-radius: 999px; padding: 10px 20px; min-height: 44px; cursor: pointer;
+  border: 1px solid var(--indigo); background: var(--indigo); color: var(--on-accent);
+}
+.btn.ghost { background: transparent; color: var(--indigo); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.status { min-height: 1.4em; margin: 12px 0 0; font-size: 13px; color: var(--muted); }
+.status.err { color: var(--vermilion); }
+
+.browse { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+.tools { display: grid; gap: 8px; grid-template-columns: minmax(0, 1fr) auto auto; margin-bottom: 14px; }
+.tools .count { grid-column: 1 / -1; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.list { display: grid; gap: 8px; max-height: min(64vh, 680px); overflow: auto; padding: 2px 4px 2px 2px; align-content: start; }
+.row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; text-align: left; font: inherit; color: inherit;
+  background: var(--paper); border: 1px solid transparent; border-radius: var(--r-sm); padding: 12px 14px; min-height: 58px;
+  cursor: pointer; min-width: 0; transition: border-color .15s, background .15s;
+}
+.row:hover { border-color: var(--line); }
+.row[aria-current="true"] { background: var(--indigo-soft); border-color: var(--indigo); }
+.row .w { font-weight: 700; font-size: 18px; overflow-wrap: anywhere; }
+.row .r { color: var(--indigo); font-size: 13px; align-self: center; }
+.row .id { font: 11px var(--f-mono); color: var(--muted); align-self: start; }
+.row .g { grid-column: 1 / -1; color: var(--muted); font-size: 13.5px; overflow-wrap: anywhere; }
+.empty { padding: 28px 16px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r-sm); }
+
+.detail { min-width: 0; }
+.head { display: grid; gap: 4px; padding-bottom: 14px; border-bottom: 1px dashed var(--line); margin-bottom: 14px; }
+.head .w { font: 700 clamp(2rem, 7vw, 2.8rem)/1.15 var(--f-display); overflow-wrap: anywhere; }
+.head .r { color: var(--indigo); font-size: 16px; }
+.head .meta { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.alts { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 14px; }
+.sense { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.sense:last-child { border-bottom: 0; }
+.sense .n {
+  width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--indigo-soft); color: var(--indigo); font: 700 13px var(--f-mono);
+}
+.sense .m { font-size: 15px; overflow-wrap: anywhere; padding-top: 3px; }
+.sense .sub { grid-column: 2; font-size: 13px; color: var(--muted); display: grid; gap: 3px; }
+.sense .tag { display: inline-block; width: max-content; padding: 0 9px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-size: 12px; }
+.sense .kana { color: var(--warn); }
+details.raw { margin-top: 16px; }
+.raw pre { margin: 8px 0 0; padding: 12px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-sm); font: 12px/1.5 var(--f-mono); overflow: auto; max-height: 360px; white-space: pre; }
+.bar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+
+.study {
+  display: grid; gap: 14px; justify-items: center; text-align: center; align-content: center;
+  padding: clamp(20px, 4vw, 40px) 14px; min-height: 300px; animation: rise .35s ease both;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.study .sw { font: 700 clamp(2.5rem, 10vw, 4.2rem)/1.15 var(--f-display); overflow-wrap: anywhere; }
+.study .sr { color: var(--indigo); font-size: 18px; font-weight: 500; }
+.sback { display: grid; gap: 6px; justify-items: center; border-top: 1px dashed var(--line); padding-top: 16px; width: 100%; }
+.sb { font-size: 16px; max-width: 60ch; overflow-wrap: anywhere; }
+.hint { font-size: 13px; color: var(--muted); }
+.qbar { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%; }
+.qbar .btn { flex: 1 1 140px; min-height: 52px; font-size: 15px; }
+.opts { display: grid; gap: 10px; width: 100%; max-width: 560px; }
+.opt {
+  font: 500 15px var(--f-ui); text-align: left; padding: 14px 16px; min-height: 54px; border-radius: var(--r-sm);
+  border: 1px solid var(--line); background: var(--paper); color: var(--ink); cursor: pointer; overflow-wrap: anywhere;
+  transition: border-color .15s, transform .1s;
+}
+.opt:not(:disabled):hover { border-color: var(--indigo); }
+.opt:not(:disabled):active { transform: scale(.99); }
+.opt:disabled { cursor: default; }
+.opt.good { background: var(--ok-soft); border-color: var(--ok); }
+.opt.bad { background: var(--vermilion-soft); border-color: var(--vermilion); }
+.feed { font-weight: 600; color: var(--ok); overflow-wrap: anywhere; }
+.feed.bad { color: var(--vermilion); }
+.ans { font: 700 22px var(--f-display); text-align: center; width: 100%; max-width: 340px; min-height: 58px; }
+.gq-jp { font: 700 clamp(1.5rem, 6vw, 2.2rem)/1.5 var(--f-display); overflow-wrap: anywhere; }
+
+.gsec { margin: 20px 0 8px; font: 600 11.5px var(--f-ui); letter-spacing: .16em; text-transform: uppercase; color: var(--vermilion); }
+.gsec-list { margin: 0; padding-left: 18px; display: grid; gap: 5px; font-size: 14px; overflow-wrap: anywhere; }
+.gex { display: grid; gap: 4px; padding: 14px; margin-bottom: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-sm); }
+.gex .jp { font: 500 17px/1.7 var(--f-display); overflow-wrap: anywhere; }
+.gex .fu { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.gex .tr { font-size: 14px; overflow-wrap: anywhere; }
+.forms { display: grid; grid-template-columns: auto 1fr 1fr; gap: 8px 16px; font-size: 13.5px; align-items: baseline; }
+.forms .fk { color: var(--muted); }
+.forms .fw { font-family: var(--f-display); }
+.forms .fr { color: var(--indigo); }
+.forms .hit span { font-weight: 700; }
+
+.prog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.stat { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 14px; min-width: 0; }
+.stat b { display: block; font: 700 24px var(--f-display); font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: 12.5px; }
+
+@media (min-width: 720px) {
+  .top { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+}
+@media (min-width: 860px) {
+  .browse { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+  .detail { position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow: auto; }
+  .list { max-height: min(70vh, 720px); }
+}
+@media (max-width: 719px) {
+  body { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+  .panel { padding: 16px; }
+  .tabs {
+    position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    display: grid; grid-template-columns: repeat(3, 1fr); padding: 6px; border-radius: 20px; z-index: 20;
+    background: color-mix(in srgb, var(--card) 92%, transparent); backdrop-filter: blur(10px);
+    box-shadow: 0 12px 30px -10px rgba(0,0,0,.35);
+  }
+  .tabs button { min-height: 52px; padding: 8px 4px; border-radius: 14px; font-size: 14px; }
+  .tools { grid-template-columns: 1fr 1fr; }
+  .tools input[type="search"] { grid-column: 1 / -1; }
+  .tools .count { order: 9; }
+  .list { max-height: none; overflow: visible; }
+  .forms { grid-template-columns: 1fr; gap: 2px; }
+  .forms .fk { margin-top: 10px; color: var(--vermilion); font-weight: 600; }
+  .study { min-height: 240px; }
+  .qbar .btn { flex-basis: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .study { animation: none; } }
+.empty:empty { display: none; }
+[hidden] { display: none !important; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand"><span class="seal" aria-hidden="true">語</span><h1>Kosakata dan Bunpou</h1></div>
+    <p>Telusuri kosakata dan pola tata bahasa, lalu latih dengan kartu, pilihan ganda, dan contoh kalimat. Semua diproses di perangkat ini.</p>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Bagian">
+    <button role="tab" id="tabBrowse" aria-selected="true" type="button">Jelajah</button>
+    <button role="tab" id="tabStudy" aria-selected="false" type="button">Belajar</button>
+    <button role="tab" id="tabGrammar" aria-selected="false" type="button">Bunpou</button>
+  </div>
+
+  <div id="pageBrowse">
+
+  <section class="panel">
+    <div class="top">
+      <div>
+        <h2>Berkas</h2>
+        <dl id="sum"></dl>
+        <details class="load">
+          <summary>Muat JSON lain</summary>
+          <label class="drop" id="drop" for="file">
+            <strong>Pilih file JSON atau jatuhkan di sini</strong>
+            <span>Hasil dari halaman konverter (.json)</span>
+            <input id="file" type="file" accept=".json,application/json">
+          </label>
+          <textarea id="paste" spellcheck="false" aria-label="Tempel JSON" placeholder='{"meta": {...}, "entries": [...]}'></textarea>
+          <p style="margin:8px 0 0"><button class="btn ghost" id="pasteGo" type="button">Baca teks</button></p>
+        </details>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </div>
+      <div>
+        <h2>Kelas kata</h2>
+        <div class="chips" id="pos"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="browse">
+    <section class="panel" aria-labelledby="h-list">
+      <h2 id="h-list">Kosakata</h2>
+      <div class="tools">
+        <input id="q" type="search" placeholder="Cari kata, bacaan, atau arti" aria-label="Cari kosakata" autocomplete="off">
+        <select id="sort" aria-label="Urutkan">
+          <option value="id">Urutan asli</option>
+          <option value="word">Abjad kata</option>
+          <option value="senses">Jumlah arti</option>
+        </select>
+        <select id="lvl" aria-label="Tingkat JLPT"><option value="">Semua tingkat</option><option value="N5">N5</option><option value="N4">N4</option><option value="N3">N3</option><option value="N2">N2</option><option value="N1">N1</option></select>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="list" id="list"></div>
+    </section>
+
+    <section class="panel detail" aria-labelledby="h-det">
+      <h2 id="h-det">Detail</h2>
+      <div id="det"></div>
+    </section>
+  </div>
+  </div>
+
+  <div id="pageGrammar" hidden>
+    <section class="panel">
+      <div class="chips" id="gmodes" role="group" aria-label="Mode bunpou">
+        <button class="chip" type="button" data-g="list" aria-pressed="true">Daftar pola</button>
+        <button class="chip" type="button" data-g="quiz" aria-pressed="false">Latihan contoh</button>
+      </div>
+    </section>
+    <div id="gList" class="browse">
+      <section class="panel" aria-labelledby="h-gl">
+        <h2 id="h-gl">Pola</h2>
+        <div class="tools">
+          <input id="gq" type="search" placeholder="Cari pola, romaji, arti, atau contoh" aria-label="Cari pola bunpou" autocomplete="off">
+          <select id="glvl" aria-label="Tingkat JLPT"><option value="">Semua tingkat</option><option value="N5">N5</option><option value="N4">N4</option><option value="N3">N3</option><option value="N2">N2</option><option value="N1">N1</option></select>
+          <span class="count" id="gcount"></span>
+        </div>
+        <div class="list" id="glist"></div>
+      </section>
+      <section class="panel detail" aria-labelledby="h-gd">
+        <h2 id="h-gd">Detail</h2>
+        <div id="gdet"></div>
+      </section>
+    </div>
+    <section class="panel" id="gQuiz" aria-labelledby="h-gq" hidden>
+      <h2 id="h-gq">Latihan contoh</h2>
+      <div id="gQuizBox"></div>
+    </section>
+  </div>
+
+  <div id="pageStudy" hidden>
+    <section class="panel" aria-labelledby="h-study">
+      <h2 id="h-study">Belajar</h2>
+      <div class="tools2">
+        <div class="chips" id="modes" role="group" aria-label="Mode belajar">
+          <button class="chip" type="button" data-mode="card" aria-pressed="true">Kartu</button>
+          <button class="chip" type="button" data-mode="quiz" aria-pressed="false">Pilihan ganda</button>
+          <button class="chip" type="button" data-mode="type" aria-pressed="false">Ketik bacaan</button>
+        </div>
+        <select id="spos" aria-label="Kelas kata untuk belajar"></select>
+        <select id="slvl" aria-label="Tingkat JLPT untuk belajar"><option value="">Semua tingkat</option><option value="N5">N5</option><option value="N4">N4</option><option value="N3">N3</option><option value="N2">N2</option><option value="N1">N1</option></select>
+      </div>
+      <div id="stage"></div>
+    </section>
+    <section class="panel" aria-labelledby="h-prog">
+      <h2 id="h-prog">Kemajuan</h2>
+      <div id="prog"></div>
+      <p style="margin:4px 0 0"><button class="btn ghost" id="reset" type="button">Reset kemajuan</button></p>
+    </section>
+  </div>
+</div>
+
+<script type="application/json" id="data">/*DATA*/</script>
+<script type="application/json" id="gdata">/*GRAMMAR*/</script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var S = { all: [], shown: [], sel: -1, pos: '', meta: {} };
+
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined && text !== null) n.textContent = text; return n; }
+  function say(msg, err) { var s = $('status'); s.textContent = msg || ''; s.className = 'status' + (err ? ' err' : ''); }
+
+  /* Terima dua skema: ringkas (word, meanings) dan lengkap (words, forms, glosses). */
+  function norm(e, meta) {
+    var lem = e.words ? (e.words[0] || '') : (e.word || '');
+    var f0 = (e.forms && e.forms[0]) || {};
+    var alts = e.alternates || (e.forms ? e.forms.slice(1) : []);
+    var pos = e.pos || e.partsOfSpeech || [];
+    var senses = (e.senses || []).map(function (s) {
+      return {
+        n: s.n, pos: s.pos || pos,
+        meanings: s.meanings || s.glosses || [],
+        notes: s.notes || [], see: s.see || [], antonyms: s.antonyms || [],
+        fields: s.fields || [], kanaOnly: !!(s.kanaOnly || s.usuallyKanaOnly)
+      };
+    });
+    return {
+      id: e.id !== undefined ? e.id : e.entryId,
+      level: e.level || '',
+      guid: e.guid || '',
+      word: lem,
+      reading: e.reading || f0.reading || '',
+      furigana: e.furigana || f0.furigana || '',
+      alts: alts.map(function (a) { return { word: a.word, reading: a.reading, furigana: a.furigana }; }),
+      pos: pos, labels: e.labels || [], senses: senses,
+      deck: e.deck || meta.deck || '', noteType: e.noteType || meta.noteType || '',
+      raw: e
+    };
+  }
+
+  function setData(obj, name) {
+    var entries = obj && obj.entries;
+    if (!Array.isArray(entries)) throw new Error('Tidak ada daftar "entries" di file ini.');
+    S.meta = obj.meta || {};
+    S.all = entries.map(function (e) { return norm(e, S.meta); });
+    S.name = name || 'JSON';
+    S.sel = -1; S.pos = '';
+    ST.started = false; ST.pos = '';
+    renderSummary(); renderPos(); renderList();
+    if (!$('pageStudy').hidden) startSession();
+    say(S.all.length.toLocaleString('id-ID') + ' kosakata dibaca dari ' + S.name + '.');
+  }
+
+  function renderSummary() {
+    var m = S.meta, senses = 0, decks = {}, types = {};
+    S.all.forEach(function (e) { senses += e.senses.length; decks[e.deck] = 1; types[e.noteType] = 1; });
+    var rows = [
+      ['Sumber', S.name],
+      ['Kartu', S.all.length],
+      ['Arti (sense)', senses],
+      ['Deck', Object.keys(decks).filter(Boolean).join(', ') || '-'],
+      ['Tipe note', Object.keys(types).filter(Boolean).join(', ') || '-'],
+      ['Dibuat', m.generatedAt ? new Date(m.generatedAt).toLocaleString('id-ID') : '-']
+    ];
+    var dl = $('sum'); dl.innerHTML = '';
+    rows.forEach(function (r) {
+      dl.appendChild(el('dt', '', r[0]));
+      dl.appendChild(el('dd', '', typeof r[1] === 'number' ? r[1].toLocaleString('id-ID') : String(r[1])));
+    });
+  }
+
+  function renderPos() {
+    var c = {};
+    S.all.forEach(function (e) { e.pos.forEach(function (p) { c[p] = (c[p] || 0) + 1; }); });
+    var keys = Object.keys(c).sort(function (a, b) { return c[b] - c[a] || (a < b ? -1 : 1); });
+    var box = $('pos'); box.innerHTML = '';
+    var all = el('button', 'chip', 'Semua'); all.type = 'button'; all.setAttribute('aria-pressed', S.pos === '');
+    all.addEventListener('click', function () { S.pos = ''; renderPos(); renderList(); });
+    box.appendChild(all);
+    keys.slice(0, 40).forEach(function (k) {
+      var b = el('button', 'chip', k); b.type = 'button';
+      b.appendChild(el('span', 'n', c[k]));
+      b.setAttribute('aria-pressed', S.pos === k);
+      b.addEventListener('click', function () { S.pos = S.pos === k ? '' : k; renderPos(); renderList(); });
+      box.appendChild(b);
+    });
+  }
+
+  function glossOf(e) {
+    var s = e.senses[0];
+    return s && s.meanings.length ? s.meanings.slice(0, 3).join(', ') : '';
+  }
+
+  function renderList() {
+    var q = $('q').value.trim().toLowerCase();
+    var sort = $('sort').value;
+    var idx = S.all.map(function (e, i) { return i; });
+    var hit = idx.filter(function (i) {
+      var e = S.all[i];
+      if (S.pos && e.pos.indexOf(S.pos) < 0) return false;
+      if ($('lvl').value && e.level !== $('lvl').value) return false;
+      if (!q) return true;
+      var hay = [e.word, e.reading, e.furigana].concat(e.alts.map(function (a) { return a.word + ' ' + a.reading; }),
+        e.senses.map(function (s) { return s.meanings.join(' '); })).join(' ').toLowerCase();
+      return hay.indexOf(q) >= 0;
+    });
+    if (sort === 'word') hit.sort(function (a, b) { return S.all[a].reading < S.all[b].reading ? -1 : S.all[a].reading > S.all[b].reading ? 1 : 0; });
+    if (sort === 'senses') hit.sort(function (a, b) { return S.all[b].senses.length - S.all[a].senses.length; });
+    S.shown = hit;
+
+    var list = $('list'); list.innerHTML = '';
+    hit.forEach(function (i) {
+      var e = S.all[i];
+      var b = el('button', 'row'); b.type = 'button';
+      b.setAttribute('aria-current', i === S.sel);
+      b.appendChild(el('span', 'w', e.word || e.reading));
+      b.appendChild(el('span', 'id', e.id !== undefined ? '#' + e.id : ''));
+      if (e.word) b.appendChild(el('span', 'r', e.reading));
+      b.appendChild(el('span', 'g', glossOf(e)));
+      b.addEventListener('click', function () { select(i); });
+      list.appendChild(b);
+    });
+    if (!hit.length) list.appendChild(el('div', 'empty', 'Tidak ada kosakata yang cocok.'));
+    $('count').textContent = hit.length.toLocaleString('id-ID') + ' dari ' + S.all.length.toLocaleString('id-ID') + ' kosakata' + (S.pos ? ' · kelas: ' + S.pos : '');
+    if (S.sel < 0 && hit.length) select(hit[0], true);
+    else if (S.sel >= 0) renderDetail();
+  }
+
+  function select(i, quiet) {
+    S.sel = i;
+    renderDetail();
+    var rows = $('list').querySelectorAll('.row');
+    S.shown.forEach(function (k, p) { if (rows[p]) rows[p].setAttribute('aria-current', k === i); });
+    if (!quiet && window.matchMedia('(max-width: 859px)').matches) $('h-det').scrollIntoView({ block: 'start' });
+  }
+
+  function renderDetail() {
+    var box = $('det'); box.innerHTML = '';
+    var e = S.all[S.sel];
+    if (!e) { box.appendChild(el('div', 'empty', 'Pilih kosakata di daftar.')); return; }
+
+    var head = el('div', 'head');
+    head.appendChild(el('div', 'w', e.word || e.reading));
+    if (e.word) head.appendChild(el('div', 'r', e.reading));
+    var meta = [];
+    if (e.level) meta.push(e.level);
+    if (e.id !== undefined) meta.push('ID ' + e.id);
+    if (e.pos.length) meta.push(e.pos.join(' · '));
+    if (e.deck) meta.push('Deck: ' + e.deck);
+    if (meta.length) head.appendChild(el('div', 'meta', meta.join('   ')));
+    box.appendChild(head);
+
+    if (e.furigana || e.alts.length) {
+      var sec = el('div', '');
+      sec.appendChild(el('div', 'meta', 'Penulisan dan bacaan'));
+      var ul = el('ul', 'alts');
+      if (e.furigana) ul.appendChild(el('li', '', 'Utama: ' + e.furigana));
+      e.alts.forEach(function (a) { ul.appendChild(el('li', '', (a.furigana || a.word) + '  ·  ' + a.reading)); });
+      sec.appendChild(ul); box.appendChild(sec);
+    }
+
+    var h = el('div', 'meta', 'Arti (' + e.senses.length + ')');
+    h.style.margin = '16px 0 4px';
+    box.appendChild(h);
+    if (!e.senses.length) {
+      box.appendChild(el('div', 'empty', e.raw.meaningHtml ? e.raw.meaningHtml.replace(/<[^>]*>/g, ' ').trim() : 'Tidak ada arti terstruktur.'));
+    }
+    e.senses.forEach(function (s) {
+      var row = el('div', 'sense');
+      row.appendChild(el('span', 'n', s.n !== undefined ? String(s.n) : ''));
+      row.appendChild(el('span', 'm', s.meanings.join('; ')));
+      var sub = el('div', 'sub');
+      if (s.pos.length && s.pos.join('|') !== e.pos.join('|')) sub.appendChild(el('span', '', s.pos.join(' · ')));
+      if (s.kanaOnly) sub.appendChild(el('span', 'kana', 'biasanya ditulis dengan kana'));
+      if (s.notes.length) sub.appendChild(el('span', '', 'Catatan: ' + s.notes.join('; ')));
+      if (s.see.length) sub.appendChild(el('span', '', 'Lihat: ' + s.see.join(', ')));
+      if (s.antonyms.length) sub.appendChild(el('span', '', 'Lawan kata: ' + s.antonyms.join(', ')));
+      if (s.fields.length) sub.appendChild(el('span', 'tag', s.fields.join(', ')));
+      if (sub.childNodes.length) row.appendChild(sub);
+      box.appendChild(row);
+    });
+
+    var raw = el('details', 'raw');
+    raw.appendChild(el('summary', '', 'Lihat JSON kata ini'));
+    var pre = el('pre', '', JSON.stringify(e.raw, null, 2));
+    raw.appendChild(pre);
+    box.appendChild(raw);
+
+    var bar = el('div', 'bar');
+    var copy = el('button', 'btn ghost', 'Salin JSON kata ini'); copy.type = 'button';
+    copy.addEventListener('click', function () {
+      var txt = JSON.stringify(e.raw, null, 2);
+      var ok = function () { say('JSON kata ini disalin.'); };
+      var fail = function () { say('Browser menolak penyalinan. Pilih teks di kotak JSON lalu salin manual.', true); };
+      try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, fail); else fail(); } catch (x) { fail(); }
+    });
+    bar.appendChild(copy); box.appendChild(bar);
+  }
+
+  /* Muat file dan teks tempel */
+  function readFile(f) {
+    if (!f) return;
+    say('Membaca ' + f.name + '...');
+    var fr = new FileReader();
+    fr.onload = function () { load(String(fr.result), f.name); };
+    fr.onerror = function () { say('File tidak bisa dibaca. Coba pilih ulang.', true); };
+    fr.readAsText(f, 'utf-8');
+  }
+  function load(text, name) {
+    try { setData(JSON.parse(text), name); }
+    catch (e) { say('JSON tidak bisa dibaca: ' + (e && e.message ? e.message : 'format tidak dikenali'), true); }
+  }
+  $('file').addEventListener('change', function (ev) { readFile(ev.target.files[0]); });
+  var drop = $('drop');
+  ['dragenter', 'dragover'].forEach(function (t) { drop.addEventListener(t, function (ev) { ev.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function (t) { drop.addEventListener(t, function (ev) { ev.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function (ev) { readFile(ev.dataTransfer && ev.dataTransfer.files[0]); });
+  $('pasteGo').addEventListener('click', function () {
+    var t = $('paste').value;
+    if (!t.trim()) { say('Tempel dulu isi JSON.', true); return; }
+    load(t, 'teks-tempel');
+  });
+
+  var qt = null;
+  $('q').addEventListener('input', function () { clearTimeout(qt); qt = setTimeout(renderList, 120); });
+  $('sort').addEventListener('change', renderList);
+  $('lvl').addEventListener('change', renderList);
+
+
+  /* ---------- Belajar: kartu, pilihan ganda, ketik bacaan. Kemajuan memakai kotak Leitner. ---------- */
+  var DAY = 86400000, LEVELS = [0, 1, 3, 7, 14], KEY = 'kosakata-leitner', SESSION = 20;
+  var P = {};
+  try { P = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { P = {}; }
+  var ST = { started: false, mode: 'card', pos: '', q: [], i: 0, right: 0, shown: false, answered: false, opts: null, pick: null, typed: '' };
+
+  function today() { return Math.floor(Date.now() / DAY); }
+  function keyOf(e) { return String(e.id !== undefined ? e.id : e.guid); }
+  function saveP() { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (x) {} }
+  function btn(label, cls, fn) { var b = el('button', cls, label); b.type = 'button'; b.addEventListener('click', fn); return b; }
+  function stat(label, value) { var d = el('div', 'stat'); d.appendChild(el('b', '', String(value))); d.appendChild(el('span', '', label)); return d; }
+  function gloss(e) { var s = e.senses[0]; return s && s.meanings.length ? s.meanings[0] : ''; }
+  function hira(s) { return String(s || '').replace(/[\u30A1-\u30F6]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x60); }).replace(/\s+/g, ''); }
+
+  function pool(mode) {
+    return S.all.filter(function (e) {
+      if (mode === 'type' ? !e.word : !(e.word || e.reading)) return false;
+      if ($('slvl').value && e.level !== $('slvl').value) return false;
+      return !ST.pos || e.pos.indexOf(ST.pos) >= 0;
+    });
+  }
+  function queue() {
+    var t = today();
+    var due = pool(ST.mode).filter(function (e) { var r = P[keyOf(e)]; return !r || r.d <= t; });
+    due.sort(function (a, b) { var ra = P[keyOf(a)], rb = P[keyOf(b)]; return (ra ? ra.b : 0) - (rb ? rb.b : 0); });
+    return due.slice(0, SESSION);
+  }
+  function grade(e, ok) {
+    var k = keyOf(e), r = P[k] || { b: 1, d: 0, r: 0, w: 0 };
+    r.b = ok ? Math.min(5, r.b + 1) : 1;
+    r.d = today() + LEVELS[r.b - 1];
+    if (ok) r.r++; else r.w++;
+    P[k] = r; saveP();
+  }
+  function options(e) {
+    var g = gloss(e), seen = {}, picks = [], src = S.all.filter(function (x) { return x !== e && gloss(x) && gloss(x) !== g; });
+    seen[g] = 1;
+    while (picks.length < 3 && src.length) {
+      var x = src.splice(Math.floor(Math.random() * src.length), 1)[0];
+      if (!seen[gloss(x)]) { seen[gloss(x)] = 1; picks.push(gloss(x)); }
+    }
+    var opts = picks.concat([g]);
+    for (var i = opts.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = opts[i]; opts[i] = opts[j]; opts[j] = t; }
+    return opts;
+  }
+
+  function startSession() {
+    ST.started = true; ST.q = queue(); ST.i = 0; ST.right = 0;
+    ST.shown = false; ST.answered = false; ST.opts = null; ST.pick = null; ST.typed = '';
+    renderModes(); renderSpos(); renderStage(); renderProg();
+  }
+  function advance() {
+    ST.i++; ST.shown = false; ST.answered = false; ST.opts = null; ST.pick = null; ST.typed = '';
+    renderStage(); renderProg();
+  }
+
+  function renderModes() {
+    $('modes').querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === ST.mode); });
+  }
+  function renderSpos() {
+    var c = {};
+    S.all.forEach(function (e) { e.pos.forEach(function (p) { c[p] = (c[p] || 0) + 1; }); });
+    var sel = $('spos'); sel.innerHTML = '';
+    var all = el('option', '', 'Semua kelas'); all.value = ''; sel.appendChild(all);
+    Object.keys(c).sort(function (a, b) { return c[b] - c[a] || (a < b ? -1 : 1); }).forEach(function (k) {
+      var o = el('option', '', k + ' (' + c[k] + ')'); o.value = k; sel.appendChild(o);
+    });
+    sel.value = ST.pos;
+  }
+  $('modes').querySelectorAll('button').forEach(function (b) {
+    b.addEventListener('click', function () { ST.mode = b.getAttribute('data-mode'); startSession(); });
+  });
+  $('spos').addEventListener('change', function () { ST.pos = $('spos').value; startSession(); });
+  $('slvl').addEventListener('change', startSession);
+
+  function renderStage() {
+    var box = $('stage'); box.innerHTML = '';
+    if (!S.all.length) { box.appendChild(el('div', 'empty', 'Muat JSON dulu di tab Jelajah.')); return; }
+    if (!ST.q.length) { box.appendChild(el('div', 'empty', 'Tidak ada kosakata yang perlu diulang sekarang. Coba kelas atau mode lain, atau kembali besok.')); return; }
+    if (ST.i >= ST.q.length) {
+      var f = el('div', 'study');
+      f.appendChild(el('div', 'sw', 'Sesi selesai'));
+      f.appendChild(el('div', 'hint', ST.right + ' dari ' + ST.q.length + ' benar'));
+      f.appendChild(btn('Mulai sesi baru', 'btn', startSession));
+      box.appendChild(f); return;
+    }
+    var e = ST.q[ST.i], r = P[keyOf(e)];
+    box.appendChild(el('div', 'hint', (ST.i + 1) + ' dari ' + ST.q.length + ' · ' + (r ? 'kotak ' + r.b : 'baru')));
+    if (ST.mode === 'quiz') quizView(box, e);
+    else if (ST.mode === 'type') typeView(box, e);
+    else cardView(box, e);
+  }
+
+  function cardView(box, e) {
+    var c = el('div', 'study');
+    c.appendChild(el('div', 'sw', e.word || e.reading));
+    if (e.word) c.appendChild(el('div', 'sr', e.reading));
+    if (ST.shown) {
+      var back = el('div', 'sback');
+      if (!e.senses.length) back.appendChild(el('div', 'sb', 'Arti tidak tersedia.'));
+      e.senses.forEach(function (s) { back.appendChild(el('div', 'sb', (s.n !== undefined ? s.n + '. ' : '') + s.meanings.join('; '))); });
+      c.appendChild(back);
+    }
+    var bar = el('div', 'qbar');
+    if (!ST.shown) bar.appendChild(btn('Lihat arti', 'btn', function () { ST.shown = true; renderStage(); }));
+    else {
+      bar.appendChild(btn('Lupa', 'btn ghost', function () { grade(e, false); advance(); }));
+      bar.appendChild(btn('Ingat', 'btn', function () { grade(e, true); ST.right++; advance(); }));
+    }
+    c.appendChild(bar); box.appendChild(c);
+  }
+
+  function quizView(box, e) {
+    var c = el('div', 'study');
+    c.appendChild(el('div', 'sw', e.word || e.reading));
+    if (e.word) c.appendChild(el('div', 'sr', e.reading));
+    c.appendChild(el('div', 'hint', 'Pilih arti yang benar'));
+    if (!ST.opts) ST.opts = options(e);
+    var g = gloss(e), grid = el('div', 'opts');
+    ST.opts.forEach(function (o) {
+      var b = btn(o, 'opt', function () {
+        if (ST.answered) return;
+        ST.answered = true; ST.pick = o;
+        var ok = o === g; grade(e, ok); if (ok) ST.right++;
+        renderStage(); renderProg();
+      });
+      if (ST.answered) {
+        b.disabled = true;
+        if (o === g) b.classList.add('good'); else if (o === ST.pick) b.classList.add('bad');
+      }
+      grid.appendChild(b);
+    });
+    c.appendChild(grid);
+    if (ST.answered) {
+      var okq = ST.pick === g;
+      c.appendChild(el('div', 'feed' + (okq ? '' : ' bad'), okq ? 'Benar.' : 'Belum tepat. Jawaban: ' + g));
+      c.appendChild(btn('Lanjut', 'btn', advance));
+    }
+    box.appendChild(c);
+  }
+
+  function typeView(box, e) {
+    var c = el('div', 'study');
+    c.appendChild(el('div', 'sw', e.word));
+    var ar = e.senses.slice(0, 2).map(function (s) { return s.meanings.slice(0, 3).join(', '); }).join(' | ');
+    c.appendChild(el('div', 'hint', 'Arti: ' + (ar || '-')));
+    c.appendChild(el('div', 'hint', 'Tulis bacaannya dalam hiragana'));
+    var inp = el('input', 'ans'); inp.type = 'text'; inp.id = 'ans'; inp.autocomplete = 'off'; inp.spellcheck = false;
+    inp.setAttribute('aria-label', 'Bacaan dalam hiragana'); inp.value = ST.typed; inp.disabled = ST.answered;
+    inp.addEventListener('input', function () { ST.typed = inp.value; });
+    inp.addEventListener('keydown', function (ev) {
+      if (ev.key !== 'Enter') return;
+      ev.preventDefault();
+      if (ST.answered) advance(); else check();
+    });
+    function check() {
+      ST.typed = inp.value; ST.answered = true;
+      var ok = hira(ST.typed) === hira(e.reading); grade(e, ok); if (ok) ST.right++;
+      renderStage(); renderProg();
+    }
+    c.appendChild(inp);
+    if (ST.answered) {
+      var okt = hira(ST.typed) === hira(e.reading);
+      c.appendChild(el('div', 'feed' + (okt ? '' : ' bad'), okt ? 'Benar.' : 'Belum tepat. Bacaannya: ' + e.reading));
+      c.appendChild(btn('Lanjut', 'btn', advance));
+    } else c.appendChild(btn('Periksa', 'btn', check));
+    box.appendChild(c);
+    if (!ST.answered) setTimeout(function () { inp.focus(); }, 0);
+  }
+
+  function renderProg() {
+    var box = $('prog'); box.innerHTML = '';
+    if (!S.all.length) { box.appendChild(el('div', 'hint', 'Belum ada data.')); return; }
+    var t = today(), items = pool('card'), baru = 0, due = 0, right = 0, wrong = 0, boxes = [0, 0, 0, 0, 0];
+    items.forEach(function (e) {
+      var r = P[keyOf(e)];
+      if (!r) { baru++; return; }
+      boxes[r.b - 1]++; if (r.d <= t) due++; right += r.r; wrong += r.w;
+    });
+    var g = el('div', 'prog-grid');
+    g.appendChild(stat('Total kosakata', items.length));
+    g.appendChild(stat('Belum dipelajari', baru));
+    g.appendChild(stat('Perlu diulang', due));
+    g.appendChild(stat('Jawaban benar', right));
+    g.appendChild(stat('Jawaban salah', wrong));
+    box.appendChild(g);
+    box.appendChild(el('div', 'hint', 'Kotak Leitner: naik setelah benar, kembali ke kotak 1 setelah salah.'));
+    var g2 = el('div', 'prog-grid');
+    boxes.forEach(function (n, i) { g2.appendChild(stat('Kotak ' + (i + 1) + ' · jeda ' + LEVELS[i] + ' hari', n)); });
+    box.appendChild(g2);
+  }
+
+  var armed = false;
+  $('reset').addEventListener('click', function () {
+    var b = $('reset');
+    if (!armed) {
+      armed = true; b.textContent = 'Klik lagi untuk menghapus';
+      setTimeout(function () { armed = false; b.textContent = 'Reset kemajuan'; }, 4000);
+      return;
+    }
+    armed = false; b.textContent = 'Reset kemajuan';
+    P = {}; saveP(); startSession();
+  });
+
+  var PAGES = { browse: 'pageBrowse', study: 'pageStudy', grammar: 'pageGrammar' };
+  function tabId(k) { return 'tab' + k.charAt(0).toUpperCase() + k.slice(1); }
+  function tabTo(which) {
+    Object.keys(PAGES).forEach(function (k) {
+      $(PAGES[k]).hidden = k !== which;
+      $(tabId(k)).setAttribute('aria-selected', k === which);
+    });
+    if (which === 'study') { if (!ST.started) startSession(); else { renderStage(); renderProg(); } }
+    if (which === 'grammar') renderGrammar();
+  }
+  Object.keys(PAGES).forEach(function (k) { $(tabId(k)).addEventListener('click', function () { tabTo(k); }); });
+
+  /* ---------- Bunpou: pola tata bahasa dari file grammar-n5.json ---------- */
+  var G = [];
+  try { G = JSON.parse(document.getElementById('gdata').textContent); } catch (e) { G = []; }
+  var GS = { mode: 'list', sel: -1, shown: [], qs: null, qi: 0, right: 0, ans: null, opts: null };
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function gText(g) {
+    return [g.grammar_point, g.romaji, g.meaning].concat(g.usage_notes || [], g.connection_rule || [],
+      (g.examples || []).map(function (x) { return x.japanese + ' ' + x.translation; })).join(' ').toLowerCase();
+  }
+  function renderGrammar() {
+    $('gmodes').querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-g') === GS.mode); });
+    var list = GS.mode === 'list';
+    $('gList').hidden = !list; $('gQuiz').hidden = list;
+    if (list) renderGList(); else renderGQuiz();
+  }
+  $('gmodes').querySelectorAll('button').forEach(function (b) {
+    b.addEventListener('click', function () { GS.mode = b.getAttribute('data-g'); if (GS.mode === 'quiz') startGQuiz(); renderGrammar(); });
+  });
+  function renderGList() {
+    var q = $('gq').value.trim().toLowerCase();
+    var lv = $('glvl').value;
+    GS.shown = G.map(function (g, i) { return i; }).filter(function (i) {
+      if (lv && G[i].jlpt_level !== lv) return false;
+      return !q || gText(G[i]).indexOf(q) >= 0;
+    });
+    var list = $('glist'); list.innerHTML = '';
+    GS.shown.forEach(function (i) {
+      var g = G[i], b = el('button', 'row'); b.type = 'button';
+      b.setAttribute('aria-current', i === GS.sel);
+      b.appendChild(el('span', 'w', g.grammar_point));
+      b.appendChild(el('span', 'id', '#' + g.id));
+      b.appendChild(el('span', 'r', g.romaji));
+      b.appendChild(el('span', 'g', g.meaning));
+      b.addEventListener('click', function () { GS.sel = i; renderGList(); });
+      list.appendChild(b);
+    });
+    if (!GS.shown.length) list.appendChild(el('div', 'empty', 'Tidak ada pola yang cocok.'));
+    $('gcount').textContent = GS.shown.length + ' dari ' + G.length + ' pola';
+    if (GS.sel < 0 && GS.shown.length) GS.sel = GS.shown[0];
+    renderGDetail();
+  }
+  function gSection(box, title, items) {
+    if (!items || !items.length) return;
+    box.appendChild(el('div', 'gsec', title));
+    var ul = el('ul', 'gsec-list');
+    items.forEach(function (t) { ul.appendChild(el('li', '', t)); });
+    box.appendChild(ul);
+  }
+  function renderGDetail() {
+    var box = $('gdet'); box.innerHTML = '';
+    var g = G[GS.sel];
+    if (!g) { box.appendChild(el('div', 'empty', 'Pilih pola di daftar.')); return; }
+    var head = el('div', 'head');
+    head.appendChild(el('div', 'w', g.grammar_point));
+    head.appendChild(el('div', 'r', g.romaji));
+    head.appendChild(el('div', 'meta', (g.jlpt_level || '') + ' · ' + g.meaning));
+    box.appendChild(head);
+    gSection(box, 'Cara menyambung', g.connection_rule);
+    gSection(box, 'Catatan pemakaian', g.usage_notes);
+    if (g.conjugations && g.conjugations.length) {
+      box.appendChild(el('div', 'gsec', 'Bentuk'));
+      var grid = el('div', 'forms');
+      g.conjugations.forEach(function (c) {
+        grid.appendChild(el('span', 'fk', c.label));
+        grid.appendChild(el('span', 'fw', c.polite));
+        grid.appendChild(el('span', 'fr', c.plain));
+      });
+      box.appendChild(grid);
+    }
+    if (g.examples && g.examples.length) {
+      box.appendChild(el('div', 'gsec', 'Contoh (' + g.examples.length + ')'));
+      g.examples.forEach(function (x) {
+        var ex = el('div', 'gex');
+        ex.appendChild(el('div', 'jp', x.japanese));
+        if (x.furigana) ex.appendChild(el('div', 'fu', x.furigana));
+        ex.appendChild(el('div', 'tr', x.translation));
+        box.appendChild(ex);
+      });
+    }
+  }
+
+  function startGQuiz() {
+    var all = [];
+    var lv = $('glvl').value;
+    G.forEach(function (g) { if (lv && g.jlpt_level !== lv) return; (g.examples || []).forEach(function (x) { all.push({ g: g, x: x }); }); });
+    GS.qs = shuffle(all).slice(0, 10); GS.qi = 0; GS.right = 0; GS.ans = null; GS.opts = null;
+  }
+  function gOptions(g) {
+    var others = shuffle(G.filter(function (x) { return x !== g; })).slice(0, 3);
+    return shuffle([g].concat(others));
+  }
+  function renderGQuiz() {
+    var box = $('gQuizBox'); box.innerHTML = '';
+    if (!G.length) { box.appendChild(el('div', 'empty', 'Data bunpou belum tersedia.')); return; }
+    if (!GS.qs) startGQuiz();
+    if (GS.qi >= GS.qs.length) {
+      var f = el('div', 'study');
+      f.appendChild(el('div', 'sw', 'Latihan selesai'));
+      f.appendChild(el('div', 'hint', GS.right + ' dari ' + GS.qs.length + ' benar'));
+      f.appendChild(btn('Mulai latihan baru', 'btn', function () { startGQuiz(); renderGQuiz(); }));
+      box.appendChild(f); return;
+    }
+    var cur = GS.qs[GS.qi], g = cur.g, x = cur.x;
+    var c = el('div', 'study');
+    c.appendChild(el('div', 'hint', (GS.qi + 1) + ' dari ' + GS.qs.length + ' · benar ' + GS.right));
+    c.appendChild(el('div', 'gq-jp', x.japanese));
+    if (x.furigana) c.appendChild(el('div', 'hint', x.furigana));
+    c.appendChild(el('div', 'hint', 'Pola apa yang dipakai di kalimat ini?'));
+    if (!GS.opts) GS.opts = gOptions(g);
+    var grid = el('div', 'opts');
+    GS.opts.forEach(function (o) {
+      var b = btn(o.grammar_point + '  ·  ' + o.meaning, 'opt', function () {
+        if (GS.ans !== null) return;
+        GS.ans = o.id;
+        if (o === g) GS.right++;
+        renderGQuiz();
+      });
+      if (GS.ans !== null) {
+        b.disabled = true;
+        if (o === g) b.classList.add('good'); else if (o.id === GS.ans) b.classList.add('bad');
+      }
+      grid.appendChild(b);
+    });
+    c.appendChild(grid);
+    if (GS.ans !== null) {
+      var okg = GS.ans === g.id;
+      c.appendChild(el('div', 'feed' + (okg ? '' : ' bad'), okg ? 'Benar.' : 'Belum tepat. Pola yang benar: ' + g.grammar_point));
+      c.appendChild(el('div', 'hint', x.translation));
+      c.appendChild(btn('Lanjut', 'btn', function () { GS.qi++; GS.ans = null; GS.opts = null; renderGQuiz(); }));
+    }
+    box.appendChild(c);
+  }
+  $('gq').addEventListener('input', function () { clearTimeout(GS.t); GS.t = setTimeout(renderGList, 120); });
+  $('glvl').addEventListener('change', function () { GS.sel = -1; renderGList(); });
+
+  var embedded = document.getElementById('data').textContent.trim();
+  if (embedded.charAt(0) === '{') {
+    try { setData(JSON.parse(embedded), 'contoh bawaan'); } catch (e) { say('Data contoh rusak.', true); }
+  } else {
+    $('det').appendChild(el('div', 'empty', 'Muat file JSON untuk mulai.'));
+  }
+})();
+</script>
