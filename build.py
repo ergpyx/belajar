@@ -16,7 +16,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent
 TEMPLATE = ROOT / 'template' / 'reader.html'
-OUT = ROOT / 'dist' / 'index.html'
+OUT = ROOT / 'index.html'
 LEVEL_RE = re.compile(r'-(n[1-5])(?:-[^.]*)?\.json$', re.IGNORECASE)
 LEVEL_ORDER = {'N5': 0, 'N4': 1, 'N3': 2, 'N2': 3, 'N1': 4}
 

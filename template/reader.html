@@ -181,6 +181,12 @@ details.raw { margin-top: 16px; }
 .stat { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 14px; min-width: 0; }
 .stat b { display: block; font: 700 24px var(--f-display); font-variant-numeric: tabular-nums; }
 .stat span { color: var(--muted); font-size: 12.5px; }
+.tools2 { display: grid; gap: 10px; margin-bottom: 14px; min-width: 0; }
+.tools2 select { justify-self: start; max-width: 100%; min-width: 0; }
+.intro > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; margin-bottom: 14px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); font: 600 13px var(--f-ui); color: var(--ink); min-height: 48px; }
+.intro > summary::-webkit-details-marker { display: none; }
+.intro > summary::after { content: "+"; font: 500 20px/1 var(--f-mono); color: var(--indigo); }
+.intro[open] > summary::after { content: "\2212"; }
 
 @media (min-width: 720px) {
   .top { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
@@ -196,10 +202,19 @@ details.raw { margin-top: 16px; }
   .tabs {
     position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px));
     display: grid; grid-template-columns: repeat(3, 1fr); padding: 6px; border-radius: 20px; z-index: 20;
-    background: color-mix(in srgb, var(--card) 92%, transparent); backdrop-filter: blur(10px);
-    box-shadow: 0 12px 30px -10px rgba(0,0,0,.35);
+    background: var(--card);
+    box-shadow: 0 12px 30px -10px rgba(0,0,0,.35), 0 0 0 1px var(--line);
   }
   .tabs button { min-height: 52px; padding: 8px 4px; border-radius: 14px; font-size: 14px; }
+  .wrap { gap: 16px; }
+  header p { display: none; }
+  .brand { gap: 12px; }
+  .seal { width: 42px; height: 42px; font-size: 20px; }
+  h1 { font-size: 1.5rem; }
+  .tools2 { grid-template-columns: 1fr 1fr; }
+  .tools2 .chips { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .tools2 .chips .chip { justify-content: center; padding: 8px 6px; font-size: 13px; }
+  .tools2 select { width: 100%; max-width: 100%; }
   .tools { grid-template-columns: 1fr 1fr; }
   .tools input[type="search"] { grid-column: 1 / -1; }
   .tools .count { order: 9; }
@@ -228,6 +243,8 @@ details.raw { margin-top: 16px; }
 
   <div id="pageBrowse">
 
+  <details class="intro" open>
+  <summary>Berkas dan kelas kata</summary>
   <section class="panel">
     <div class="top">
       <div>
@@ -251,6 +268,7 @@ details.raw { margin-top: 16px; }
       </div>
     </div>
   </section>
+  </details>
 
   <div class="browse">
     <section class="panel" aria-labelledby="h-list">
@@ -903,6 +921,8 @@ details.raw { margin-top: 16px; }
   $('gq').addEventListener('input', function () { clearTimeout(GS.t); GS.t = setTimeout(renderGList, 120); });
   $('glvl').addEventListener('change', function () { GS.sel = -1; renderGList(); });
 
+  var intro = document.querySelector('.intro');
+  if (intro && window.matchMedia('(max-width: 719px)').matches) intro.open = false;
   var embedded = document.getElementById('data').textContent.trim();
   if (embedded.charAt(0) === '{') {
     try { setData(JSON.parse(embedded), 'contoh bawaan'); } catch (e) { say('Data contoh rusak.', true); }

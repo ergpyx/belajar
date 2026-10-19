@@ -1,6 +1,6 @@
 # Belajar Kosakata dan Bunpou
 
-Folder ini menyimpan data belajar dari N5 sampai N1. Halaman hasil ada di `dist/index.html`.
+Folder ini menyimpan data belajar dari N5 sampai N1. Halaman hasil ada di `index.html` (di folder root).
 
 ## Struktur
 
@@ -12,8 +12,7 @@ belajar/
 ├── template/
 │   └── reader.html # tampilan halaman, jangan diubah kecuali tahu apa yang diubah
 ├── build.py        # menggabungkan semua data menjadi satu halaman
-└── dist/
-    └── index.html  # hasil build, siap dibuka atau diterbitkan
+└── index.html      # hasil build, siap dibuka atau diterbitkan
 ```
 
 ## Penamaan file
@@ -31,7 +30,7 @@ File yang namanya tidak punya tingkat akan dilewati dan diberi peringatan saat b
 
 1. Taruh file JSON di `data/kotoba/` atau `data/bunpou/` dengan nama yang benar.
 2. Jalankan `python3 build.py`.
-3. Buka `dist/index.html`.
+3. Buka `index.html`.
 
 Build akan menampilkan jumlah kosakata dan pola per tingkat, serta memberi peringatan untuk `id` ganda atau pola tanpa `grammar_point`.
 
